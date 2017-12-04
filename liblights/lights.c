@@ -49,10 +49,10 @@ char const*const BUTTON_FILE
         = "/sys/class/leds/button-backlight/brightness";
 
 char const*const RGB_BLINK_FILE
-        = "/sys/class/leds/rgbled/blink";
+        = "/sys/class/leds/rgb/blink";
 
 char const*const RGB_LED_FILE
-        = "/sys/class/leds/rgbled/brightness";
+        = "/sys/class/leds/rgb/brightness";
 
 /**
  * device methods
@@ -123,7 +123,6 @@ set_speaker_light_locked(struct light_device_t* dev,
     int blink;
     int onMS, offMS;
     unsigned int colorRGB;
-    int red, blue;
 
     if(!dev) {
         return -1;
@@ -156,9 +155,7 @@ set_speaker_light_locked(struct light_device_t* dev,
     if (blink) {
         write_int(RGB_BLINK_FILE, rgb);
     } else {
-        red = (colorRGB >> 16) & 0xFF;
-        blue = ((colorRGB & 0xFF) << 8) & 0xFF00;
-        write_int(RGB_LED_FILE, (blue+red));
+        write_int(RGB_LED_FILE, rgb);
     }
 
     return 0;
@@ -211,20 +208,6 @@ set_light_attention(struct light_device_t* dev,
     return 0;
 }
 
-static int
-set_light_buttons(struct light_device_t* dev,
-        struct light_state_t const* state)
-{
-    int err = 0;
-    if(!dev) {
-        return -1;
-    }
-    pthread_mutex_lock(&g_lock);
-    err = write_int(BUTTON_FILE, state->color & 0xFF);
-    pthread_mutex_unlock(&g_lock);
-    return err;
-}
-
 /** Close the lights device */
 static int
 close_lights(struct light_device_t *dev)
@@ -255,8 +238,6 @@ static int open_lights(const struct hw_module_t* module, char const* name,
         set_light = set_light_battery;
     else if (0 == strcmp(LIGHT_ID_NOTIFICATIONS, name))
         set_light = set_light_notifications;
-    else if (0 == strcmp(LIGHT_ID_BUTTONS, name))
-        set_light = set_light_buttons;
     else if (0 == strcmp(LIGHT_ID_ATTENTION, name))
         set_light = set_light_attention;
     else
