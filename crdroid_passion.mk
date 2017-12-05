@@ -16,7 +16,7 @@
 $(call inherit-product, device/lenovo/passion/full_passion.mk)
 
 # Inherit some common CM stuff.
-$(call inherit-product, vendor/crdroid/config/common_full_phone.mk)
+$(call inherit-product, vendor/cm/config/common_full_phone.mk)
 
 # Boot animation
 TARGET_SCREEN_WIDTH := 1080
