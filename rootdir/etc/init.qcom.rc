@@ -221,21 +221,29 @@ on boot
     chown system system /sys/class/leds/button-backlight/brightness
     chmod 0664 /sys/class/leds/test-led/brightness
     chown system system /sys/class/leds/test-led/brightness
-    chmod 0664 /sys/class/leds/rgbled/brightness
-    chown system system /sys/class/leds/rgbled/brightness
-    chmod 0664 /sys/class/leds/rgbled/trigger
-    chown system system /sys/class/leds/rgbled/trigger
-    chmod 0664 /sys/bus/i2c/devices/6-0036/dimming_step_time
-    chown system system /sys/bus/i2c/devices/6-0036/dimming_step_time
-    chmod 0664 /sys/class/leds/rgbled/delay_off
-    chown system system /sys/class/leds/rgbled/delay_off
-    chmod 0664 /sys/class/leds/rgbled/delay_on
-    chown system system /sys/class/leds/rgbled/delay_on
-    restorecon /sys/class/leds/rgbled/delay_off
-    restorecon /sys/class/leds/rgbled/delay_on
-    restorecon /sys/class/leds/button-backlight/brightness
-    restorecon /sys/class/leds/test-led/brightness
-    restorecon /sys/class/leds/rgbled/brightness
+    chown system system /sys/class/leds/green/blink
+    chmod 0664 /sys/class/leds/green/blink
+    chown system system /sys/class/leds/green/delay_on
+    chmod 0664 /sys/class/leds/green/delay_on
+    chown system system /sys/class/leds/green/delay_off
+    chmod 0664 /sys/class/leds/green/delay_off
+
+    chown system system /sys/class/leds/red/blink
+    chmod 0664 /sys/class/leds/red/blink
+    chown system system /sys/class/leds/red/delay_on
+    chmod 0664 /sys/class/leds/red/delay_on
+    chown system system /sys/class/leds/red/delay_off
+    chmod 0664 /sys/class/leds/red/delay_off
+
+    # Change the ownership of the notification LED interface
+    chown system system /sys/class/leds/rgb/control
+    chmod 0664 /sys/class/leds/rgb/control
+
+    # Change the ownership of the charging LED interface
+    chown system system /sys/class/leds/charging/brightness
+    chmod 0664 /sys/class/leds/charging/brightness
+    chown system system /sys/class/leds/charging/trigger
+    chmod 0664 /sys/class/leds/charging/trigger
 #end lenovo add by houdz1@lenovo.com
 
 #lenovo-sw caoyi1 add for sensor calibration 20151222 begin
